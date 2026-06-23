@@ -1,0 +1,39 @@
+{
+  "colegiados": [
+    {
+      "dni": "12345678",
+      "nombre": "Juan Perez",
+      "habilitado": true,
+      "es_administrativo": false,
+      "consejo_departamental": "Lima"
+    },
+    {
+      "dni": "87654321",
+      "nombre": "Maria Lopez",
+      "habilitado": true,
+      "es_administrativo": true,
+      "consejo_departamental": "Lima"
+    },
+    {
+      "dni": "11223344",
+      "nombre": "Carlos Ruiz",
+      "habilitado": false,
+      "es_administrativo": false,
+      "consejo_departamental": "Callao"
+    },
+    {
+      "dni": "44332211",
+      "nombre": "Ana Gomez",
+      "habilitado": true,
+      "es_administrativo": false,
+      "consejo_departamental": "Cusco"
+    },
+    {
+      "dni": "99887766",
+      "nombre": "Pedro Infante",
+      "habilitado": true,
+      "es_administrativo": false,
+      "consejo_departamental": "Lima"
+    }
+  ]
+}

@@ -59,16 +59,30 @@ El avance se realizara issue por issue. No se implementara todo de golpe. Cada i
 
 ## Comandos esperados
 
-Estos comandos se completaran cuando exista la estructura del proyecto:
+Levantar el entorno completo:
 
 ```bash
 docker-compose up --build
 ```
 
+Ejecutar pruebas:
+
 ```bash
 dotnet test
 ```
 
+## Servicios Docker
+
+- Web: `http://localhost:8080`
+- API mock de colegiados: `http://localhost:3001/colegiados`
+- SQL Server: `localhost,1433`
+
+Credenciales locales de SQL Server:
+
+- Usuario: `sa`
+- Password: `Cip_StrongPassword123!`
+- Base de datos esperada: `PruebaTecnicaCip`
+
 ## Estado actual
 
-Repositorio inicializado con la planificacion tecnica y backlog base. El siguiente paso sera implementar el Issue 1 cuando se solicite explicitamente.
+Repositorio inicializado con la planificacion tecnica, estructura base Razor Pages y Docker Compose inicial. El siguiente paso sera implementar el Issue 3 cuando se solicite explicitamente.
