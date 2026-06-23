@@ -39,10 +39,10 @@ La aprobacion de solicitudes debera proteger el cupo del evento con una transacc
 
 ## Backlog inicial
 
-- [ ] Issue 0: README inicial y planificacion del repositorio.
-- [ ] Issue 1: Bootstrap del proyecto .NET Razor Pages.
-- [ ] Issue 2: Docker Compose base con app, SQL Server y API mock.
-- [ ] Issue 3: EF Core, entidades, migracion inicial y seed del evento.
+- [x] Issue 0: README inicial y planificacion del repositorio.
+- [x] Issue 1: Bootstrap del proyecto .NET Razor Pages.
+- [x] Issue 2: Docker Compose base con app, SQL Server y API mock.
+- [x] Issue 3: EF Core, entidades, migracion inicial y seed del evento.
 - [ ] Issue 4: Cliente HTTP para API mock de colegiados.
 - [ ] Issue 5: Reglas de elegibilidad del colegiado.
 - [ ] Issue 6: Portal de inscripcion.
@@ -71,6 +71,12 @@ Ejecutar pruebas:
 dotnet test
 ```
 
+Aplicar migraciones EF Core en el SQL Server local:
+
+```bash
+dotnet ef database update --project src/PruebaTecnicaCip.Web --startup-project src/PruebaTecnicaCip.Web
+```
+
 ## Servicios Docker
 
 - Web: `http://localhost:8080`
@@ -85,4 +91,4 @@ Credenciales locales de SQL Server:
 
 ## Estado actual
 
-Repositorio inicializado con la planificacion tecnica, estructura base Razor Pages y Docker Compose inicial. El siguiente paso sera implementar el Issue 3 cuando se solicite explicitamente.
+Repositorio inicializado con la planificacion tecnica, estructura base Razor Pages, Docker Compose inicial y modelo EF Core con migracion inicial. El siguiente paso sera implementar el Issue 4 cuando se solicite explicitamente.
