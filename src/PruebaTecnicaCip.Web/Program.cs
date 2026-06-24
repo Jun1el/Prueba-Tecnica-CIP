@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PruebaTecnicaCip.Web.Data;
+using PruebaTecnicaCip.Web.Features.Admin;
 using PruebaTecnicaCip.Web.Features.Eligibility;
 using PruebaTecnicaCip.Web.Integrations.Colegiados;
 
@@ -10,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IColegiadoEligibilityService, ColegiadoEligibilityService>();
+builder.Services.AddScoped<IRegistrationReviewService, RegistrationReviewService>();
 builder.Services.AddHttpClient<IColegiadosClient, ColegiadosClient>(client =>
 {
     var baseUrl = builder.Configuration["ColegiadosApi:BaseUrl"]
