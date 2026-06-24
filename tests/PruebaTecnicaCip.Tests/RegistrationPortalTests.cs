@@ -78,6 +78,32 @@ public class RegistrationPortalTests
         Assert.False(page.ModelState.IsValid);
     }
 
+    [Fact]
+    public async Task OnPostAsyncBlocksRegistrationWhenEventIsFull()
+    {
+        using var fixture = RegistrationPortalFixture.CreateEligible(capacity: 2, approvedCount: 2);
+        var page = fixture.CreatePage();
+        page.Input = CreateInput("12345678", "Juan Perez");
+
+        var result = await page.OnPostAsync(CancellationToken.None);
+
+        Assert.IsType<PageResult>(result);
+        Assert.Empty(fixture.DbContext.RegistrationRequests);
+        Assert.True(page.IsFull);
+        Assert.False(page.ModelState.IsValid);
+    }
+
+    [Fact]
+    public async Task OnGetAsyncMarksPageAsFullWhenCapacityIsConsumed()
+    {
+        using var fixture = RegistrationPortalFixture.CreateEligible(capacity: 2, approvedCount: 2);
+        var page = fixture.CreatePage();
+
+        await page.OnGetAsync(CancellationToken.None);
+
+        Assert.True(page.IsFull);
+    }
+
     private static IndexModel.RegistrationInput CreateInput(string dni, string fullName)
     {
         return new IndexModel.RegistrationInput
@@ -102,7 +128,7 @@ public class RegistrationPortalTests
 
     private sealed class RegistrationPortalFixture : IDisposable
     {
-        private RegistrationPortalFixture(ColegiadoDto colegiado)
+        private RegistrationPortalFixture(ColegiadoDto colegiado, int capacity = 2, int approvedCount = 0)
         {
             WebRootPath = Path.Combine(Path.GetTempPath(), $"cip-webroot-{Guid.NewGuid():N}");
             Directory.CreateDirectory(WebRootPath);
@@ -117,8 +143,8 @@ public class RegistrationPortalTests
                 Id = 1,
                 Name = "Dia del Padre",
                 Council = "Lima",
-                Capacity = 2,
-                ApprovedCount = 0,
+                Capacity = capacity,
+                ApprovedCount = approvedCount,
                 StartsAt = DateTime.UtcNow,
                 CreatedAt = DateTime.UtcNow
             });
@@ -133,7 +159,7 @@ public class RegistrationPortalTests
 
         private ColegiadoDto Colegiado { get; }
 
-        public static RegistrationPortalFixture CreateEligible()
+        public static RegistrationPortalFixture CreateEligible(int capacity = 2, int approvedCount = 0)
         {
             return new RegistrationPortalFixture(new ColegiadoDto
             {
@@ -142,7 +168,7 @@ public class RegistrationPortalTests
                 Habilitado = true,
                 EsAdministrativo = false,
                 ConsejoDepartamental = "Lima"
-            });
+            }, capacity, approvedCount);
         }
 
         public static RegistrationPortalFixture CreateDisabled()
