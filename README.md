@@ -43,7 +43,7 @@ La aprobacion de solicitudes debera proteger el cupo del evento con una transacc
 - [x] Issue 1: Bootstrap del proyecto .NET Razor Pages.
 - [x] Issue 2: Docker Compose base con app, SQL Server y API mock.
 - [x] Issue 3: EF Core, entidades, migracion inicial y seed del evento.
-- [ ] Issue 4: Cliente HTTP para API mock de colegiados.
+- [x] Issue 4: Cliente HTTP para API mock de colegiados.
 - [ ] Issue 5: Reglas de elegibilidad del colegiado.
 - [ ] Issue 6: Portal de inscripcion.
 - [ ] Issue 7: Dashboard administrador.
@@ -83,6 +83,11 @@ dotnet ef database update --project src/PruebaTecnicaCip.Web --startup-project s
 - API mock de colegiados: `http://localhost:3001/colegiados`
 - SQL Server: `localhost,1433`
 
+Configuracion local del cliente de colegiados:
+
+- `ColegiadosApi__BaseUrl=http://colegiados-api:3000` dentro de Docker Compose.
+- `ColegiadosApi:BaseUrl=http://localhost:3001` para ejecucion local fuera de Docker.
+
 Credenciales locales de SQL Server:
 
 - Usuario: `sa`
@@ -91,4 +96,4 @@ Credenciales locales de SQL Server:
 
 ## Estado actual
 
-Repositorio inicializado con la planificacion tecnica, estructura base Razor Pages, Docker Compose inicial y modelo EF Core con migracion inicial. El siguiente paso sera implementar el Issue 4 cuando se solicite explicitamente.
+Repositorio inicializado con la planificacion tecnica, estructura base Razor Pages, Docker Compose inicial, modelo EF Core con migracion inicial y cliente HTTP para la API mock de colegiados. El siguiente paso sera implementar el Issue 5 cuando se solicite explicitamente.
