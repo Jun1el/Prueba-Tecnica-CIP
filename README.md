@@ -44,7 +44,7 @@ La aprobacion de solicitudes debera proteger el cupo del evento con una transacc
 - [x] Issue 2: Docker Compose base con app, SQL Server y API mock.
 - [x] Issue 3: EF Core, entidades, migracion inicial y seed del evento.
 - [x] Issue 4: Cliente HTTP para API mock de colegiados.
-- [ ] Issue 5: Reglas de elegibilidad del colegiado.
+- [x] Issue 5: Reglas de elegibilidad del colegiado.
 - [ ] Issue 6: Portal de inscripcion.
 - [ ] Issue 7: Dashboard administrador.
 - [ ] Issue 8: Rechazo administrativo con observacion y log.
@@ -96,4 +96,4 @@ Credenciales locales de SQL Server:
 
 ## Estado actual
 
-Repositorio inicializado con la planificacion tecnica, estructura base Razor Pages, Docker Compose inicial, modelo EF Core con migracion inicial y cliente HTTP para la API mock de colegiados. El siguiente paso sera implementar el Issue 5 cuando se solicite explicitamente.
+Repositorio inicializado con la planificacion tecnica, estructura base Razor Pages, Docker Compose inicial, modelo EF Core con migracion inicial, cliente HTTP para la API mock de colegiados y reglas de elegibilidad del colegiado. El siguiente paso sera implementar el Issue 6 cuando se solicite explicitamente.
