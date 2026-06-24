@@ -1,0 +1,44 @@
+using Microsoft.EntityFrameworkCore;
+using PruebaTecnicaCip.Web.Data;
+using PruebaTecnicaCip.Web.Features.Admin;
+using PruebaTecnicaCip.Web.Features.Eligibility;
+using PruebaTecnicaCip.Web.Integrations.Colegiados;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddRazorPages();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IColegiadoEligibilityService, ColegiadoEligibilityService>();
+builder.Services.AddScoped<IRegistrationReviewService, RegistrationReviewService>();
+builder.Services.AddHttpClient<IColegiadosClient, ColegiadosClient>(client =>
+{
+    var baseUrl = builder.Configuration["ColegiadosApi:BaseUrl"]
+        ?? throw new InvalidOperationException("ColegiadosApi:BaseUrl is not configured.");
+
+    client.BaseAddress = new Uri(baseUrl);
+});
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapRazorPages();
+
+app.Run();
+
+public partial class Program;

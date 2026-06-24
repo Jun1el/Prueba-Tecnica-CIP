@@ -39,18 +39,18 @@ La aprobacion de solicitudes debera proteger el cupo del evento con una transacc
 
 ## Backlog inicial
 
-- [ ] Issue 0: README inicial y planificacion del repositorio.
-- [ ] Issue 1: Bootstrap del proyecto .NET Razor Pages.
-- [ ] Issue 2: Docker Compose base con app, SQL Server y API mock.
-- [ ] Issue 3: EF Core, entidades, migracion inicial y seed del evento.
-- [ ] Issue 4: Cliente HTTP para API mock de colegiados.
-- [ ] Issue 5: Reglas de elegibilidad del colegiado.
-- [ ] Issue 6: Portal de inscripcion.
-- [ ] Issue 7: Dashboard administrador.
-- [ ] Issue 8: Rechazo administrativo con observacion y log.
-- [ ] Issue 9: Aprobacion con consumo de cupo y concurrencia.
-- [ ] Issue 10: Bloqueo de nuevas inscripciones por aforo lleno.
-- [ ] Issue 11: Pruebas de integracion minimas.
+- [x] Issue 0: README inicial y planificacion del repositorio.
+- [x] Issue 1: Bootstrap del proyecto .NET Razor Pages.
+- [x] Issue 2: Docker Compose base con app, SQL Server y API mock.
+- [x] Issue 3: EF Core, entidades, migracion inicial y seed del evento.
+- [x] Issue 4: Cliente HTTP para API mock de colegiados.
+- [x] Issue 5: Reglas de elegibilidad del colegiado.
+- [x] Issue 6: Portal de inscripcion.
+- [x] Issue 7: Dashboard administrador.
+- [x] Issue 8: Rechazo administrativo con observacion y log.
+- [x] Issue 9: Aprobacion con consumo de cupo y concurrencia.
+- [x] Issue 10: Bloqueo de nuevas inscripciones por aforo lleno.
+- [x] Issue 11: Pruebas de integracion minimas.
 - [ ] Issue 12: Documentacion final y verificacion con Docker Compose.
 
 ## Plan de trabajo
@@ -59,16 +59,41 @@ El avance se realizara issue por issue. No se implementara todo de golpe. Cada i
 
 ## Comandos esperados
 
-Estos comandos se completaran cuando exista la estructura del proyecto:
+Levantar el entorno completo:
 
 ```bash
 docker-compose up --build
 ```
 
+Ejecutar pruebas:
+
 ```bash
 dotnet test
 ```
 
+Aplicar migraciones EF Core en el SQL Server local:
+
+```bash
+dotnet ef database update --project src/PruebaTecnicaCip.Web --startup-project src/PruebaTecnicaCip.Web
+```
+
+## Servicios Docker
+
+- Web: `http://localhost:8080`
+- API mock de colegiados: `http://localhost:3001/colegiados`
+- SQL Server: `localhost,1433`
+
+Configuracion local del cliente de colegiados:
+
+- `ColegiadosApi__BaseUrl=http://colegiados-api:3000` dentro de Docker Compose.
+- `ColegiadosApi:BaseUrl=http://localhost:3001` para ejecucion local fuera de Docker.
+
+Credenciales locales de SQL Server:
+
+- Usuario: `sa`
+- Password: `Cip_StrongPassword123!`
+- Base de datos esperada: `PruebaTecnicaCip`
+
 ## Estado actual
 
-Repositorio inicializado con la planificacion tecnica y backlog base. El siguiente paso sera implementar el Issue 1 cuando se solicite explicitamente.
+Repositorio inicializado con la planificacion tecnica, estructura base Razor Pages, Docker Compose inicial, modelo EF Core con migracion inicial, cliente HTTP para la API mock de colegiados, reglas de elegibilidad y portal publico de inscripcion. El siguiente paso sera implementar el Issue 7 cuando se solicite explicitamente.

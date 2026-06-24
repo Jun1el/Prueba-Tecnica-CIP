@@ -1,0 +1,54 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: src/PruebaTecnicaCip.Web/Dockerfile
+    container_name: cip-web
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Server=sqlserver,1433;Database=PruebaTecnicaCip;User Id=sa;Password=Cip_StrongPassword123!;TrustServerCertificate=True;MultipleActiveResultSets=true
+      ColegiadosApi__BaseUrl: http://colegiados-api:3000
+    ports:
+      - "8080:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      colegiados-api:
+        condition: service_started
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: cip-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: Cip_StrongPassword123!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  colegiados-api:
+    image: node:20-alpine
+    container_name: cip-colegiados-api
+    working_dir: /data
+    command: sh -c "npx --yes json-server@0.17.4 --host 0.0.0.0 --port 3000 db.json"
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./mock/colegiados/db.json:/data/db.json:ro
+    healthcheck:
+      test: wget -q --spider http://127.0.0.1:3000/colegiados || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+volumes:
+  sqlserver-data:
