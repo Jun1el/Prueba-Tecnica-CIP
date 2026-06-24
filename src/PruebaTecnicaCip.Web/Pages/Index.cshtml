@@ -18,6 +18,13 @@
             </div>
         }
 
+        @if (Model.IsFull)
+        {
+            <div class="alert alert-warning" role="alert">
+                El aforo del evento esta completo. No se aceptan nuevas inscripciones.
+            </div>
+        }
+
         <form method="post" enctype="multipart/form-data" class="vstack gap-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -39,7 +46,7 @@
                 <span asp-validation-for="Input.ChildDniImage" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+            <button type="submit" class="btn btn-primary" disabled="@Model.IsFull">Enviar solicitud</button>
         </form>
     </div>
 </div>
