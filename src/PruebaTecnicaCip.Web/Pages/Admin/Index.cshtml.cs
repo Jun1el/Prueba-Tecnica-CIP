@@ -1,17 +1,27 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PruebaTecnicaCip.Web.Data;
 using PruebaTecnicaCip.Web.Domain;
+using PruebaTecnicaCip.Web.Features.Admin;
 
 namespace PruebaTecnicaCip.Web.Pages.Admin;
 
-public class IndexModel(ApplicationDbContext dbContext) : PageModel
+public class IndexModel(
+    ApplicationDbContext dbContext,
+    IRegistrationReviewService reviewService) : PageModel
 {
     private const int EventId = 1;
 
     public DashboardMetrics Metrics { get; private set; } = new();
 
     public IReadOnlyList<PendingRegistrationItem> PendingRegistrations { get; private set; } = [];
+
+    [TempData]
+    public string? StatusMessage { get; set; }
+
+    [TempData]
+    public string? StatusType { get; set; }
 
     public async Task OnGetAsync(CancellationToken cancellationToken)
     {
@@ -55,6 +65,19 @@ public class IndexModel(ApplicationDbContext dbContext) : PageModel
                 ChildDniImagePath = r.ChildDniImagePath
             })
             .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IActionResult> OnPostRejectAsync(
+        int id,
+        string observation,
+        CancellationToken cancellationToken)
+    {
+        var result = await reviewService.RejectAsync(id, observation, cancellationToken);
+
+        StatusType = result.Succeeded ? "success" : "danger";
+        StatusMessage = result.Message;
+
+        return RedirectToPage();
     }
 
     public sealed record DashboardMetrics

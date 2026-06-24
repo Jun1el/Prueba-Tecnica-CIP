@@ -11,6 +11,13 @@
     </div>
 </div>
 
+@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+{
+    <div class="alert alert-@Model.StatusType" role="alert">
+        @Model.StatusMessage
+    </div>
+}
+
 <div class="row g-3 mb-4">
     <div class="col-6 col-lg-3">
         <div class="border rounded p-3 h-100">
@@ -52,6 +59,7 @@
                 <th>Consejo</th>
                 <th>Fecha</th>
                 <th>DNI menor</th>
+                <th>Rechazo</th>
             </tr>
         </thead>
         <tbody>
@@ -63,6 +71,13 @@
                     <td>@request.Council</td>
                     <td>@request.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                     <td><a href="@request.ChildDniImagePath" target="_blank" rel="noopener">Ver imagen</a></td>
+                    <td>
+                        <form method="post" asp-page-handler="Reject" class="d-flex gap-2">
+                            <input type="hidden" name="id" value="@request.Id" />
+                            <input class="form-control form-control-sm" name="observation" placeholder="Observacion" maxlength="500" required />
+                            <button class="btn btn-sm btn-outline-danger" type="submit">Rechazar</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
