@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PruebaTecnicaCip.Web.Data;
 using PruebaTecnicaCip.Web.Domain;
+using PruebaTecnicaCip.Web.Features.Admin;
 using PruebaTecnicaCip.Web.Pages.Admin;
 
 namespace PruebaTecnicaCip.Tests;
@@ -31,7 +32,7 @@ public class AdminDashboardTests
             CreateRequest(3, "11223344", RegistrationStatus.Rejected, DateTime.UtcNow));
         await dbContext.SaveChangesAsync();
 
-        var page = new IndexModel(dbContext);
+        var page = new IndexModel(dbContext, new NoOpRegistrationReviewService());
 
         await page.OnGetAsync(CancellationToken.None);
 
@@ -58,5 +59,13 @@ public class AdminDashboardTests
             Status = status,
             CreatedAt = createdAt
         };
+    }
+
+    private sealed class NoOpRegistrationReviewService : IRegistrationReviewService
+    {
+        public Task<RegistrationReviewResult> RejectAsync(int requestId, string observation, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(RegistrationReviewResult.Success("OK"));
+        }
     }
 }
