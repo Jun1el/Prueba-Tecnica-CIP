@@ -50,7 +50,7 @@ La aprobacion de solicitudes debera proteger el cupo del evento con una transacc
 - [x] Issue 8: Rechazo administrativo con observacion y log.
 - [x] Issue 9: Aprobacion con consumo de cupo y concurrencia.
 - [x] Issue 10: Bloqueo de nuevas inscripciones por aforo lleno.
-- [ ] Issue 11: Pruebas de integracion minimas.
+- [x] Issue 11: Pruebas de integracion minimas.
 - [ ] Issue 12: Documentacion final y verificacion con Docker Compose.
 
 ## Plan de trabajo
