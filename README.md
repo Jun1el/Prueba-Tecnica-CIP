@@ -46,7 +46,7 @@ La aprobacion de solicitudes debera proteger el cupo del evento con una transacc
 - [x] Issue 4: Cliente HTTP para API mock de colegiados.
 - [x] Issue 5: Reglas de elegibilidad del colegiado.
 - [x] Issue 6: Portal de inscripcion.
-- [ ] Issue 7: Dashboard administrador.
+- [x] Issue 7: Dashboard administrador.
 - [ ] Issue 8: Rechazo administrativo con observacion y log.
 - [ ] Issue 9: Aprobacion con consumo de cupo y concurrencia.
 - [ ] Issue 10: Bloqueo de nuevas inscripciones por aforo lleno.
