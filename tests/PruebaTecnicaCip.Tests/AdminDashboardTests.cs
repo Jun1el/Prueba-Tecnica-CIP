@@ -63,6 +63,11 @@ public class AdminDashboardTests
 
     private sealed class NoOpRegistrationReviewService : IRegistrationReviewService
     {
+        public Task<RegistrationReviewResult> ApproveAsync(int requestId, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(RegistrationReviewResult.Success("OK"));
+        }
+
         public Task<RegistrationReviewResult> RejectAsync(int requestId, string observation, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(RegistrationReviewResult.Success("OK"));
