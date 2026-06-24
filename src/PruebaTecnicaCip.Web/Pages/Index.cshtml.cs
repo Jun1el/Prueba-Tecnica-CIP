@@ -28,8 +28,13 @@ public class IndexModel(
     [TempData]
     public string? StatusType { get; set; }
 
-    public void OnGet()
+    public bool IsFull { get; private set; }
+
+    public async Task OnGetAsync(CancellationToken cancellationToken)
     {
+        IsFull = await dbContext.InstitutionalEvents
+            .AsNoTracking()
+            .AnyAsync(e => e.Id == EventId && e.ApprovedCount >= e.Capacity, cancellationToken);
     }
 
     public async Task<IActionResult> OnPostAsync(CancellationToken cancellationToken)
@@ -41,12 +46,20 @@ public class IndexModel(
             return Page();
         }
 
-        var eventExists = await dbContext.InstitutionalEvents
-            .AnyAsync(e => e.Id == EventId, cancellationToken);
+        var institutionalEvent = await dbContext.InstitutionalEvents
+            .AsNoTracking()
+            .SingleOrDefaultAsync(e => e.Id == EventId, cancellationToken);
 
-        if (!eventExists)
+        if (institutionalEvent is null)
         {
             ModelState.AddModelError(string.Empty, "El evento configurado no existe.");
+            return Page();
+        }
+
+        if (institutionalEvent.ApprovedCount >= institutionalEvent.Capacity)
+        {
+            IsFull = true;
+            ModelState.AddModelError(string.Empty, "El aforo del evento esta completo. No se aceptan nuevas inscripciones.");
             return Page();
         }
 
