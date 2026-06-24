@@ -59,7 +59,7 @@
                 <th>Consejo</th>
                 <th>Fecha</th>
                 <th>DNI menor</th>
-                <th>Rechazo</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -72,6 +72,10 @@
                     <td>@request.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                     <td><a href="@request.ChildDniImagePath" target="_blank" rel="noopener">Ver imagen</a></td>
                     <td>
+                        <form method="post" asp-page-handler="Approve" class="mb-2">
+                            <input type="hidden" name="id" value="@request.Id" />
+                            <button class="btn btn-sm btn-success" type="submit">Aprobar</button>
+                        </form>
                         <form method="post" asp-page-handler="Reject" class="d-flex gap-2">
                             <input type="hidden" name="id" value="@request.Id" />
                             <input class="form-control form-control-sm" name="observation" placeholder="Observacion" maxlength="500" required />

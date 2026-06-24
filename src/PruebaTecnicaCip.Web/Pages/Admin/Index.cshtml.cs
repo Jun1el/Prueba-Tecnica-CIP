@@ -80,6 +80,16 @@ public class IndexModel(
         return RedirectToPage();
     }
 
+    public async Task<IActionResult> OnPostApproveAsync(int id, CancellationToken cancellationToken)
+    {
+        var result = await reviewService.ApproveAsync(id, cancellationToken);
+
+        StatusType = result.Succeeded ? "success" : "danger";
+        StatusMessage = result.Message;
+
+        return RedirectToPage();
+    }
+
     public sealed record DashboardMetrics
     {
         public string EventName { get; init; } = string.Empty;
